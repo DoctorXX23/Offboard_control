@@ -24,7 +24,13 @@ find_package(uars_ros_interface REQUIRED)
 include_directories(include)
 
 # Add executables
+add_executable(offboard_flier src/offboard_control.cpp)
+ament_target_dependencies(offboard_flier rclcpp std_srvs Eigen3 std_msgs geometry_msgs uars_ros_interface)
+target_link_libraries(offboard_flier
+    MAVSDK::mavsdk
+)
 
+install(TARGETS offboard_flier DESTINATION lib/${PROJECT_NAME})
 
 
 # Install header files

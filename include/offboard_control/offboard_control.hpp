@@ -22,6 +22,7 @@
 #include "std_srvs/srv/trigger.hpp"
 #include "std_srvs/srv/empty.hpp"
 #include "std_msgs/msg/string.hpp"
+#include "geometry_msgs/msg/twist.hpp"
 
 #include "uars_ros_interface/msg/battery.hpp"
 #include "uars_ros_interface/msg/flightmode.hpp"
@@ -42,6 +43,12 @@ namespace offboard
         std::unique_ptr<mavsdk::Action> _action;
         std::shared_ptr<mavsdk::Telemetry> _telemetry;
         std::unique_ptr<mavsdk::Offboard> _offboard;
+
+        rclcpp::Subscription<geometry_msgs::msg::Twist>::SharedPtr _velocitySub;
+        void cbVelocity(const geometry_msgs::msg::Twist::SharedPtr aMsg);
+
+        rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvTakeOff;
+        void cbTakeOff(const std::shared_ptr<std_srvs::srv::Trigger::Request> aRequest, const std::shared_ptr<std_srvs::srv::Trigger::Response> aResponse);
 
         void takeOff();
         std::shared_ptr<mavsdk::System> getSystem(mavsdk::Mavsdk& aMavsdk);
