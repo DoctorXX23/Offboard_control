@@ -50,6 +50,9 @@ namespace offboard
         rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvTakeOff;
         void cbTakeOff(const std::shared_ptr<std_srvs::srv::Trigger::Request> aRequest, const std::shared_ptr<std_srvs::srv::Trigger::Response> aResponse);
 
+        rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr _srvStartOffboard;
+        void cbStartOffboard(const std::shared_ptr<std_srvs::srv::Trigger::Request> aRequest, const std::shared_ptr<std_srvs::srv::Trigger::Response> aResponse);
+
         void takeOff();
         std::shared_ptr<mavsdk::System> getSystem(mavsdk::Mavsdk& aMavsdk);
     };
