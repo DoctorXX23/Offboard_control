@@ -38,7 +38,7 @@ namespace offboard
         _offboard = std::make_unique<mavsdk::Offboard>(system);
 
         _srvTakeOff = this->create_service<std_srvs::srv::Trigger>("offboard_flier/take_off", std::bind(&OffboardControl::cbTakeOff, this, _1, _2));
-        _srvStartOffboard = this->create_service<std_srvs::srv::Trigger>("offboard_flier/take_off", std::bind(&OffboardControl::cbStartOffboard, this, _1, _2));
+        _srvStartOffboard = this->create_service<std_srvs::srv::Trigger>("offboard_flier/start_offboard", std::bind(&OffboardControl::cbStartOffboard, this, _1, _2));
 
         _velocitySub = this->create_subscription<geometry_msgs::msg::Twist>("offboard_flier/velocity", 10, std::bind(&OffboardControl::cbVelocity, this, _1));
     }
@@ -47,7 +47,7 @@ namespace offboard
     {
         mavsdk::Offboard::VelocityBodyYawspeed velocity;
 
-        velocity.down_m_s = aMsg->linear.x;
+        velocity.forward_m_s = aMsg->linear.x;
         velocity.yawspeed_deg_s = aMsg->angular.z;
 
         _offboard.get()->set_velocity_body(velocity);
