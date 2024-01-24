@@ -49,6 +49,8 @@ namespace offboard
 
         velocity.forward_m_s = aMsg->linear.x;
         velocity.yawspeed_deg_s = aMsg->angular.z;
+        
+        std::cout << "Setting yaw speed: " << velocity.yawspeed_deg_s << std::endl;
 
         _offboard.get()->set_velocity_body(velocity);
     }
